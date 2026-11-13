@@ -68,6 +68,7 @@ a { color: inherit; }
 .section-head { display: flex; flex-direction: column; gap: 18px; max-width: 46rem; margin-bottom: 48px; }
 .section-head h2 { font-size: clamp(2rem, 5.2vw, 3.6rem); font-weight: 700; }
 .section-head p { color: var(--muted); }
+.section-head p strong { color: var(--ink); font-weight: 600; }
 .eyebrow { display: flex; align-items: center; gap: 12px; font: 600 0.78rem var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .eyebrow::before { content: ""; flex: none; width: 22px; height: 4px; background: var(--accent); }
 
@@ -362,7 +363,8 @@ textarea { min-height: 96px; resize: vertical; }
       <div class="section-head">
         <p class="eyebrow">Catalogo</p>
         <h2>Scegli cosa ti serve</h2>
-        <p>Aggiungi gli articoli alla lista: ti prepariamo un preventivo su misura in base a quantità, date e luogo dell'evento. Abbiamo un'ampia disponibilità di attrezzature: contattaci per verificare quantità e date.</p>
+        <p>Seleziona gli articoli di tuo interesse e richiedi un <strong>preventivo personalizzato</strong>, elaborato in base alle quantità necessarie, alle date e alla location dell'evento.</p>
+        <p>Contattaci per verificare disponibilità e soluzioni più adatte alle tue esigenze.</p>
       </div>
       <div class="filters" id="filters" role="group" aria-label="Filtra per categoria"></div>
       <div class="grid" id="grid"></div>
@@ -495,7 +497,7 @@ textarea { min-height: 96px; resize: vertical; }
     { id: "palco", mq: true, img: "palco-piazza.webp", cat: "palchi", name: "Palco modulare", desc: "Il classico palco con ringhiere, per concerti, spettacoli, comizi e premiazioni. Si compone a moduli nella misura che serve, anche su più livelli a gradinata, e può avere una struttura di fondo. Disponibile in tutte le altezze.", specs: ["modulare", "tutte le altezze", "con ringhiere", "anche a più livelli"] },
     { id: "pedana", mq: true, img: "pedana-nera.webp", cat: "palchi", name: "Pedana modulare", desc: "Per sfilate, saggi, cerimonie e piste da ballo. Anche tutta nera, con moquette sul piano e telo intorno.", specs: ["modulare", "da 50 cm di altezza", "anche tutta nera"] },
     { id: "scivolo", img: "scivolo-disabili.webp", cat: "palchi", name: "Scivolo per disabili", desc: "Rampa di accesso da montare insieme al palco o alla pedana, per salire in carrozzina. Con corrimano sui due lati e strisce antiscivolo.", specs: ["accesso al palco", "corrimano", "antiscivolo"] },
-    { id: "raccordo", img: "palco-scalinata.webp", cat: "palchi", name: "Palco su scalinata", desc: "Un sistema di raccordo collega il gradino più alto di una scalinata al palco: si monta direttamente sui gradini e il palco diventa il loro proseguimento.", specs: ["su scalinate e gradinate", "raccordo a filo"] },
+    { id: "raccordo", img: "palco-su-scalinata.webp", cat: "palchi", name: "Palco su scalinata", desc: "Un sistema di raccordo collega il gradino più alto di una scalinata al palco: si monta direttamente sui gradini e il palco diventa il loro proseguimento.", specs: ["su scalinate e gradinate", "raccordo a filo"] },
     { id: "linoleum", mq: true, img: "linoleum-danza.webp", cat: "scenografia", name: "Linoleum danza", desc: "Tappeto da danza da stendere su palco o pedana per saggi e spettacoli.", specs: ["per saggi", "su palco e pedana"] },
     { id: "moquette", mq: true, cat: "scenografia", img: "moquette-nera.webp", name: "Moquette e telo nero", desc: "Moquette nera sul piano di palchi e pedane e telo nero tutto intorno, per un allestimento pulito e uniforme.", specs: ["moquette nera", "telo nero perimetrale"] },
     { id: "quinte", cat: "scenografia", img: "quinte-laterali.webp", name: "Quinte armate", desc: "Quinte nere di varie misure: montate sulla struttura di fondo creano un fondale nero, sfalsate ai lati formano le uscite di scena.", specs: ["varie misure", "nere"] },
