@@ -165,7 +165,8 @@ a { color: inherit; }
 /* Come funziona (fascia scura) */
 .band { background: var(--band); color: var(--band-ink); --accent-text: var(--sun); }
 .band .eyebrow { color: var(--band-muted); }
-.band .section-head p { color: var(--band-muted); }
+.band .section-head p { color: var(--band-ink); font-weight: 500; }
+.band .section-head p.eyebrow { color: var(--band-muted); font-weight: 600; }
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; counter-reset: step; border-top: 1px solid var(--band-line); }
 .steps li { counter-increment: step; padding: 28px 28px 8px 0; display: flex; flex-direction: column; gap: 8px; }
 .steps li::before { content: counter(step, decimal-leading-zero); font: 500 0.85rem var(--mono); color: var(--sun); }
@@ -375,14 +376,14 @@ textarea { min-height: 96px; resize: vertical; }
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Come funziona</p>
-        <h2>Dalla richiesta allo smontaggio</h2>
-        <p>Quattro passaggi, un solo referente dall'inizio alla fine.</p>
+        <h2>Pensiamo a tutto noi</h2>
+        <p>Dalla prima richiesta al ritiro finale, gestiamo ogni fase del tuo allestimento. Un unico referente, un servizio completo.</p>
       </div>
       <ol class="steps">
-        <li><h3>Ci dici cosa serve</h3><p>Compili la lista con articoli, quantità, data e luogo. Se hai dubbi sulle misure, ti aiutiamo noi.</p></li>
-        <li><h3>Ricevi il preventivo</h3><p>Ti mandiamo un prezzo chiaro che comprende trasporto, montaggio e ritiro.</p></li>
-        <li><h3>Consegniamo e montiamo</h3><p>Arriviamo in anticipo sull'evento e lasciamo tutto pronto all'uso.</p></li>
-        <li><h3>Ritiriamo tutto</h3><p>A evento concluso smontiamo e portiamo via. Tu non devi spostare nulla.</p></li>
+        <li><h3>Raccontaci il tuo evento</h3><p>Seleziona gli articoli, indica quantità, data e luogo. Ti aiutiamo a individuare la soluzione più adatta alle tue esigenze.</p></li>
+        <li><h3>Ricevi il tuo preventivo</h3><p>Prepariamo un'offerta personalizzata, chiara e dettagliata, comprensiva dei servizi richiesti.</p></li>
+        <li><h3>Consegniamo e allestiamo</h3><p>Portiamo le attrezzature sul posto e ci occupiamo del montaggio, lasciando tutto pronto per il tuo evento.</p></li>
+        <li><h3>Smontiamo e ritiriamo</h3><p>A evento concluso, pensiamo allo smontaggio e al ritiro delle attrezzature. Tu non devi preoccuparti di nulla.</p></li>
       </ol>
     </div>
   </section>
