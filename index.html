@@ -26,30 +26,28 @@
 <title>MediaEventi | Noleggio palchi, gazebi, sedie e bancarelle a Lecce e nel Salento</title>
 <style>
 @font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-display:swap;src:url(font/archivo-latin-wght-normal.woff2) format("woff2")}
-@font-face{font-family:"DM Mono";font-style:normal;font-weight:400;font-display:swap;src:url(font/dm-mono-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:"DM Mono";font-style:normal;font-weight:500;font-display:swap;src:url(font/dm-mono-latin-500-normal.woff2) format("woff2")}
 </style>
 <style>
 /* Layout: titoli grotteschi grandi e compatti, forme squadrate, etichette con trattino arancio; catalogo arioso con disegni al tratto; hero scuro che poggia su una trave americana con base arancio, come nel logo; sotto, catalogo a schede e lista preventivo. Tema unico chiaro, scelto perché il logo vive su fondo bianco. */
 :root {
-  --bg: #f6f5f3;
-  --surface: #ffffff;
+  --bg: #f4efe6;
+  --surface: #fffdf9;
   --ink: #1f1f1f;
-  --muted: #65615c;
-  --line: #dcd9d4;
+  --muted: #5f574d;
+  --line: #ddd4c5;
   --accent: #f34d08;
   --accent-ink: #1f1f1f;
   --accent-text: #c23c00;
   --sun: #ff6a2b;
-  --wa: #128c4b;
+  --wa: #0f7a40;
   --band: #101010;
   --band-ink: #ffffff;
   --band-muted: #b7b2ac;
   --band-line: #3a3835;
-  --tile: #ebe9e5;
+  --tile: #e9e1d3;
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --mono: var(--body);
   --wrap: 1120px;
   --radius: 0px;
 }
@@ -69,7 +67,7 @@ a { color: inherit; }
 .wrap { max-width: var(--wrap); margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .section { padding-block: 96px; }
 @media (max-width: 600px) { .section { padding-block: 64px; } }
-.section-head { display: flex; flex-direction: column; gap: 18px; max-width: 46rem; margin-bottom: 48px; }
+.section-head { display: flex; flex-direction: column; gap: 16px; max-width: 46rem; margin-bottom: 48px; }
 .section-head h2 { font-size: clamp(2rem, 5.2vw, 3.6rem); font-weight: 700; }
 .section-head p { color: var(--muted); }
 .section-head p strong { color: var(--ink); font-weight: 600; }
@@ -101,8 +99,21 @@ a { color: inherit; }
 .nav { display: flex; gap: 22px; font-weight: 500; font-size: 0.97rem; }
 .nav a { text-decoration: none; }
 .nav a:hover { color: var(--accent-text); }
-.count { font-family: var(--mono); font-size: 0.82rem; background: var(--accent-ink); color: #fff; border-radius: 999px; min-width: 22px; height: 22px; padding: 0 6px; display: inline-flex; align-items: center; justify-content: center; }
+.count[data-n="0"] { display: none; }
+.count { font-family: var(--body); font-size: 0.82rem; background: var(--accent-ink); color: #fff; border-radius: 999px; min-width: 22px; height: 22px; padding: 0 6px; display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 800px) { .nav { display: none; } }
+.site-header .wrap { position: relative; }
+.menu-btn { display: none; flex: none; width: 44px; height: 44px; border: 1.5px solid var(--line); background: transparent; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.menu-btn span { display: block; width: 18px; height: 2px; background: var(--ink); transition: transform .25s, opacity .25s; }
+.menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.menu-mobile { position: absolute; left: 0; right: 0; top: 100%; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; padding: 8px max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px)); box-shadow: 0 16px 24px rgba(40,30,15,.08); }
+.menu-mobile a { padding: 14px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-weight: 600; font-size: 1.1rem; }
+.menu-mobile a:last-child { border-bottom: 0; }
+@media (max-width: 800px) { .menu-btn { display: inline-flex; } }
+@media (max-width: 480px) { .site-header .btn-primary { display: none; } }
+@media (min-width: 801px) { .menu-mobile { display: none !important; } }
 
 /* Trave americana */
 .truss { height: 48px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='44' fill='none' stroke='%23ffffff' stroke-opacity='.4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 3h88M0 41h88M0 41L44 3l44 38'/%3E%3C/svg%3E") repeat-x left top / 88px 44px, var(--band); border-bottom: 6px solid var(--accent); }
@@ -110,7 +121,7 @@ a { color: inherit; }
 /* Hero */
 .hero { padding-block: 88px 72px; background: var(--band); color: var(--band-ink); --ink: var(--band-ink); --bg: var(--band); --muted: var(--band-muted); --line: var(--band-line); --accent-text: var(--sun); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 56px; align-items: center; }
-.hero h1 { margin-top: 22px; font-size: clamp(2.7rem, 6.6vw, 5rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; }
+.hero h1 { margin-top: 0; font-size: clamp(2.7rem, 6.6vw, 5rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .hero-lead { margin-top: 24px; font-size: 1.15rem; color: var(--muted); max-width: 34rem; }
 .hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
@@ -118,30 +129,87 @@ a { color: inherit; }
 .hero-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0 28px; margin-top: 64px; }
 .hero-list a { display: flex; flex-direction: column; gap: 4px; padding: 16px 2px 4px; border-top: 1px solid var(--line); text-decoration: none; font: 700 1.15rem var(--body); }
 .hero-list a:hover { color: var(--accent-text); }
-.hero-list small { font: 400 0.8rem var(--mono); color: var(--muted); }
-@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+.hero-list small { font: 400 0.88rem var(--body); color: var(--muted); }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 760px) {
+  .hero { padding-block: 0 40px; }
+  .hero-grid { padding-left: 0; padding-right: 0; }
+  .hero-grid > div:first-child { order: 2; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .hero-img { order: 1; aspect-ratio: 16 / 11; }
+  .hero h1 { font-size: 2.6rem; }
+  .hero-lead { font-size: 1.02rem; margin-top: 16px; }
+  .hero-cta { margin-top: 24px; } .hero-cta .btn { flex: 1 1 auto; }
+  .hero-list { display: flex; overflow-x: auto; gap: 8px; margin-top: 32px; scrollbar-width: none; padding-bottom: 2px; }
+  .hero-list::-webkit-scrollbar { display: none; }
+  .hero-list a { flex: none; border: 1px solid var(--line); padding: 10px 14px; font-size: 0.98rem; }
+  .hero-list small { display: none; }
+}
 
 /* Catalogo */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .chip { font: 500 0.95rem var(--body); padding: 9px 16px; border-radius: 0; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
 .chip:hover { border-color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 48px 32px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 24px; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 14px; } }
 .card { display: flex; flex-direction: column; min-width: 0; }
 .card-art { aspect-ratio: 1 / 1; max-width: 100%; background: var(--tile); color: var(--accent-text); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .card-art svg { width: 104px; height: 104px; stroke-width: 1.3; }
 .card-art img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.16,.7,.2,1); }
 .card:hover .card-art img { transform: scale(1.05); }
-.card-cat { font: 600 0.68rem var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-.card-body { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; flex: 1; }
-.card h3 { font-size: 1.4rem; font-weight: 600; }
-.card p { font-size: 0.95rem; color: var(--muted); }
+.card-cat { font: 500 0.82rem var(--body); color: var(--muted); }
+.card-body { display: flex; flex-direction: column; gap: 8px; padding-top: 14px; flex: 1; }
+.card h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; min-height: 2.3em; }
+.card p { font-size: 0.9rem; color: var(--muted); }
 .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
-.specs li { font: 400 0.78rem var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 3px 7px; }
-.card .btn { margin-top: 10px; align-self: flex-start; }
+.specs { display: none !important; }
+.card-spec { display: flex; flex-wrap: wrap; gap: 0; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.card-spec li:not(:last-child)::after { content: "·"; margin: 0 .45em; color: var(--muted); font-weight: 400; }
+.card-desc { display: none; }
+.card.is-open .card-desc { display: block; }
+.card-more { align-self: flex-start; padding: 2px 0; margin-bottom: 14px; border: 0; background: none; font: 600 0.85rem var(--body); color: var(--muted); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+.card-more:hover { color: var(--ink); text-decoration-color: currentColor; }
+.card-more::after { content: "+"; font-weight: 400; font-size: 1.05rem; line-height: 1; }
+.card.is-open .card-more::after { content: "–"; }
+.card .btn { margin-top: auto; align-self: stretch; padding: 10px 12px; border-color: var(--line); background: var(--surface); }
+.card .btn:hover { border-color: var(--ink); background: var(--surface); color: var(--ink); }
+
+@media (max-width: 800px) { .card h3 { font-size: 1rem; } .card p { font-size: 0.85rem; } .card .btn { font-size: 0.85rem; padding: 9px 8px; } }
 .card .btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 
-/* Lavori: immagine e testo affiancati */
+/* Lavori: foto grandi alternate, testo breve espandibile */
+.feats { display: flex; flex-direction: column; gap: 72px; }
+.feat { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.feat.rev { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); }
+.feat.rev .feat-img { order: 2; }
+.feat-img { margin: 0; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: var(--tile); }
+.feat-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.feat-text { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; min-width: 0; }
+.feat-text h3 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; }
+.feat-lead { color: var(--muted); font-size: 1.05rem; max-width: 30rem; }
+.feat-more { max-width: 30rem; color: var(--muted); font-size: 0.97rem; }
+.feat-more summary { cursor: pointer; list-style: none; font-weight: 600; color: var(--ink); display: inline-flex; align-items: center; gap: 8px; }
+.feat-more summary::-webkit-details-marker { display: none; }
+.feat-more summary::after { content: "+"; font-weight: 400; font-size: 1.2rem; line-height: 1; }
+.feat-more[open] summary::after { content: "–"; }
+.feat-more[open] summary { margin-bottom: 12px; }
+.feat-more p + p, .feat-more p + ul, .feat-more ul + p { margin-top: 10px; }
+.feat-more strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 760px) { .feats { gap: 52px; } .feat, .feat.rev { grid-template-columns: 1fr; gap: 20px; } .feat.rev .feat-img { order: 0; } }
+/* Lavori: griglia compatta */
+.works { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; }
+.work { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.work-img { display: block; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: var(--tile); margin-bottom: 6px; }
+.work-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.work h3 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+.work p { color: var(--muted); font-size: 0.98rem; }
+.work .line-link { margin-top: auto; padding-top: 4px; }
+@media (max-width: 900px) { .works { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .works { grid-template-columns: 1fr; gap: 40px; } }
+.occasions { margin-top: 72px !important; padding-top: 28px; border-top: 1px solid var(--line); font-size: clamp(1.25rem, 2.6vw, 1.7rem) !important; color: var(--muted); gap: 4px 0 !important; }
+.occasions li:not(:last-child)::after { content: ","; margin-right: .35em; }
+
 .split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
 .split + .split { margin-top: 88px; }
 .split.rev .split-img { order: 2; }
@@ -190,9 +258,13 @@ a { color: inherit; }
 .band .section-head p.eyebrow { color: var(--band-muted); font-weight: 600; }
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; counter-reset: step; border-top: 1px solid var(--band-line); }
 .steps li { counter-increment: step; padding: 28px 28px 8px 0; display: flex; flex-direction: column; gap: 8px; }
-.steps li::before { content: counter(step, decimal-leading-zero); font: 500 0.85rem var(--mono); color: var(--sun); }
+.steps li::before { content: counter(step); font: 700 1rem var(--body); color: var(--band-muted); width: 30px; height: 30px; border: 1.5px solid var(--band-line); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 .steps h3 { font-size: 1.35rem; font-weight: 700; }
 .steps p { color: var(--band-muted); font-size: 0.97rem; }
+.extras { margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; padding-top: 32px; border-top: 1px solid var(--band-line); }
+.extras h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+.extras p { color: var(--band-muted); font-size: 0.95rem; }
+@media (max-width: 760px) { .extras { grid-template-columns: 1fr; } }
 
 /* Servizi */
 .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px 40px; }
@@ -200,7 +272,7 @@ a { color: inherit; }
 .services h3 { font-size: 1.3rem; font-weight: 700; }
 .services p { color: var(--muted); font-size: 0.98rem; }
 .occasions { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 6px 18px; font: 700 clamp(1.5rem, 4vw, 2.6rem) var(--display); letter-spacing: -0.035em; line-height: 1.12; }
-.occasions li:nth-child(even) { color: var(--accent-text); }
+
 
 /* Preventivo */
 .quote { background: var(--tile); }
@@ -233,14 +305,14 @@ textarea { min-height: 96px; resize: vertical; }
 .faq details { border-bottom: 1px solid var(--line); }
 .faq summary { cursor: pointer; padding: 18px 2px; font: 700 1.1rem var(--body); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-family: var(--mono); color: var(--accent-text); }
+.faq summary::after { content: "+"; font-weight: 400; color: var(--ink); font-size: 1.3rem; line-height: 1; }
 .faq details[open] summary::after { content: "–"; }
 .faq p { padding: 0 2px 20px; color: var(--muted); max-width: 40rem; }
 
 /* Footer */
 .footer { background: var(--band); color: var(--band-ink); padding-block: 48px 96px; }
 .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 32px; }
-.footer h3 { font: 500 0.78rem var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--sun); margin-bottom: 12px; }
+.footer h3 { font: 600 0.95rem var(--body); color: var(--band-ink); margin-bottom: 10px; }
 .footer p, .footer li { color: var(--band-muted); font-size: 0.97rem; }
 .footer-logo { display: block; height: 46px; width: auto; margin-bottom: 14px; }
 .social { display: flex; gap: 12px; }
@@ -249,9 +321,11 @@ textarea { min-height: 96px; resize: vertical; }
 .social svg { width: 22px; height: 22px; }
 .contacts { display: flex; flex-direction: column; gap: 10px; }
 .footer a { color: var(--band-ink); text-underline-offset: 3px; }
-.footer a:hover { color: var(--sun); }
+.footer a:hover { color: var(--band-muted); }
 .wa-float { position: fixed; z-index: 8; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; background: var(--wa); color: #fff; font: 600 0.95rem var(--body); text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
 .wa-float:hover { filter: brightness(1.08); }
+.wa-float { transition: opacity .3s, transform .3s; }
+@media (max-width: 760px) { .wa-float.is-hidden { opacity: 0; transform: translateY(12px); pointer-events: none; } }
 .wa-float svg { width: 22px; height: 22px; flex: none; }
 @media (max-width: 520px) { .wa-float span { display: none; } .wa-float { padding: 14px; } }
 .send-row { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -266,13 +340,16 @@ textarea { min-height: 96px; resize: vertical; }
   <div class="wrap">
     <a class="logo" href="#top"><img src="img/logo.webp" alt="MediaEventi Event Solution" width="900" height="140"></a>
     <nav class="nav" aria-label="Sezioni">
-      <a href="#lavori">Lavori</a>
       <a href="#catalogo">Catalogo</a>
       <a href="#come-funziona">Come funziona</a>
-      <a href="#servizi">Servizi</a>
+      <a href="#lavori">Lavori</a>
       <a href="#domande">Domande</a>
     </nav>
-    <a class="btn btn-primary btn-small" href="#preventivo">Preventivo <span class="count" id="header-count">0</span></a>
+    <nav class="menu-mobile" id="menu-mobile" aria-label="Sezioni" hidden>
+      <a href="#catalogo">Catalogo</a><a href="#come-funziona">Come funziona</a><a href="#lavori">Lavori</a><a href="#preventivo">Preventivo</a><a href="#domande">Domande</a><a href="#contatti">Contatti</a>
+    </nav>
+    <a class="btn btn-primary btn-small" href="#preventivo">Preventivo <span class="count" id="header-count" data-n="0">0</span></a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu-mobile" aria-label="Apri il menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -280,12 +357,11 @@ textarea { min-height: 96px; resize: vertical; }
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow">Noleggio attrezzature per eventi</p>
-        <h1>Tu goditi l'evento. <em>Al resto</em> pensiamo noi.</h1>
+        <h1>Tu goditi l'evento. Al resto pensiamo noi.</h1>
         <p class="hero-lead">Palchi, pedane, scenografie, gazebo, sedie, tavoli e strutture per ogni occasione. Offriamo soluzioni complete per sagre, spettacoli, mercatini, cerimonie e manifestazioni, occupandoci di ogni fase: dal preventivo al trasporto, fino al montaggio e al ritiro.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#preventivo">Richiedi un preventivo →</a>
-          <a class="btn btn-ghost" href="#catalogo">Sfoglia il catalogo ↓</a>
+          <a class="btn btn-primary" href="#preventivo">Richiedi un preventivo</a>
+          <a class="btn btn-ghost" href="#catalogo">Sfoglia il catalogo</a>
         </div>
       </div>
       <figure class="split-img hero-img wipe"><img src="img/platea-arancione.webp" alt="Platea di sedie arancioni con passatoia rossa davanti al palco, in piazza davanti alla chiesa" width="993" height="896"></figure>
@@ -302,84 +378,135 @@ textarea { min-height: 96px; resize: vertical; }
   </section>
   <div class="truss" aria-hidden="true"></div>
 
+
+
+  <section class="section" id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Scegli cosa ti serve</h2>
+        <p>Seleziona gli articoli di tuo interesse e richiedi un <strong>preventivo personalizzato</strong>, elaborato in base alle quantità necessarie, alle date e alla location dell'evento.</p>
+        <p>Contattaci per verificare disponibilità e soluzioni più adatte alle tue esigenze.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filtra per categoria"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="section band" id="come-funziona">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Pensiamo a tutto noi</h2>
+        <p>Dalla prima richiesta al ritiro finale, gestiamo ogni fase del tuo allestimento. Un unico referente, un servizio completo.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Raccontaci il tuo evento</h3><p>Seleziona gli articoli, indica quantità, data e luogo. Ti aiutiamo a individuare la soluzione più adatta alle tue esigenze.</p></li>
+        <li><h3>Ricevi il tuo preventivo</h3><p>Prepariamo un'offerta personalizzata, chiara e dettagliata, comprensiva dei servizi richiesti.</p></li>
+        <li><h3>Consegniamo e allestiamo</h3><p>Portiamo le attrezzature sul posto e ci occupiamo del montaggio, lasciando tutto pronto per il tuo evento.</p></li>
+        <li><h3>Smontiamo e ritiriamo</h3><p>A evento concluso, pensiamo allo smontaggio e al ritiro delle attrezzature. Tu non devi preoccuparti di nulla.</p></li>
+      </ol>
+      <ul class="extras">
+        <li><h3>Sopralluogo gratuito</h3><p>Veniamo a vedere piazza, cortile o sala per capire ingombri, accessi e fondo su cui montare.</p></li>
+        <li><h3>Consulenza sulle quantità</h3><p>Quante sedie per 200 invitati? Che palco per una band di cinque elementi? Te lo diciamo noi.</p></li>
+        <li><h3>Mezzi e personale nostri</h3><p>Consegna e montaggio con i nostri mezzi e il nostro personale, negli orari concordati.</p></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="section" id="lavori">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Lavori</p>
         <h2>I nostri montaggi</h2>
+        <p>Alcuni allestimenti realizzati in piazze, cortili e chiostri del Salento.</p>
       </div>
-      <div class="split">
-        <figure class="split-img wipe"><img src="img/palco-platea-sera.webp" alt="Palco allestito con americana, luci, fondale e quinte nere, davanti a una platea di sedie" width="1100" height="1100"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Palchi e pedane</p>
-          <h3>Palco modulare</h3>
-          <p>Una soluzione versatile e personalizzabile, ideale per concerti, spettacoli, manifestazioni pubbliche ed eventi di ogni genere.</p>
-          <p>Il palco modulare è dotato di ringhiere di protezione e piantoni con piedini regolabili, che consentono di ottenere una superficie perfettamente livellata anche su pavimentazioni irregolari.</p>
-          <p>Grazie alla sua configurazione modulare, può essere realizzato a diverse altezze e sviluppato su più livelli con disposizione a gradinata. È inoltre possibile integrare rampe di accesso per persone con disabilità oppure raccordare la struttura a scalinate, garantendo funzionalità e continuità tra i diversi livelli dell'allestimento.</p>
-          <p>Una soluzione flessibile, adattabile a ogni spazio ed esigenza organizzativa.</p>
-          <a class="line-link" href="#catalogo">Vedi il catalogo</a>
-        </div>
+      <div class="feats">
+        <article class="feat">
+          <figure class="feat-img"><img src="img/palco-platea-sera.webp" alt="Palco allestito con americana, luci, fondale e quinte nere, davanti a una platea di sedie" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Palco modulare</h3>
+            <p class="feat-lead">Palco modulare con piedi regolabili per un piano livellato, scala e ringhiere protettive.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Una soluzione versatile e personalizzabile, ideale per concerti, spettacoli, manifestazioni pubbliche ed eventi di ogni genere.</p>
+            <p>Il palco modulare è dotato di ringhiere di protezione e piantoni con piedini regolabili, che consentono di ottenere una superficie perfettamente livellata anche su pavimentazioni irregolari.</p>
+            <p>Grazie alla sua configurazione modulare, può essere realizzato a diverse altezze e sviluppato su più livelli con disposizione a gradinata. È inoltre possibile integrare rampe di accesso per persone con disabilità oppure raccordare la struttura a scalinate, garantendo funzionalità e continuità tra i diversi livelli dell'allestimento.</p>
+            <p>Una soluzione flessibile, adattabile a ogni spazio ed esigenza organizzativa.</p>
+            </details>
+            <a class="line-link" href="#catalogo" data-jump="palchi">Vedi palchi e pedane</a>
+          </div>
+        </article>
+        <article class="feat rev">
+          <figure class="feat-img"><img src="img/palco-schermo.webp" alt="Palco in piazza con struttura di fondo, quinte nere e ledwall" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Struttura per fondale</h3>
+            <p class="feat-lead">Sostegno da integrare al palco per quinte armate e fondali neri, ma anche LEDwall, striscioni e banner.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Per rendere il palco ancora più versatile e funzionale, è possibile integrare un'apposita struttura di sostegno, progettata per supportare diverse soluzioni di allestimento scenografico.</p>
+            <p>Ideale per l'installazione di quinte armate per la realizzazione di fondali neri, la struttura consente inoltre il montaggio di LEDwall, striscioni pubblicitari, banner e altri elementi scenografici.</p>
+            <p>Una soluzione pratica e modulare, pensata per personalizzare il palco e valorizzare ogni tipo di evento, dagli spettacoli alle manifestazioni, fino a concerti e convention.</p>
+            </details>
+            <a class="line-link" href="#catalogo" data-jump="scenografia">Vedi la struttura</a>
+          </div>
+        </article>
+        <article class="feat">
+          <figure class="feat-img"><img src="img/saggio-alto.webp" alt="Allestimento completo per un saggio visto dall'alto: palco con linoleum, fondale di quinte nere e platea di sedie" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Saggi e spettacoli</h3>
+            <p class="feat-lead">Palco con linoleum per la danza o moquette nera, quinte armate per il fondale e sfalsate per le uscite di scena, e la platea per il pubblico.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Tutto il necessario per realizzare una scena professionale, funzionale e curata in ogni dettaglio, ideale per saggi di danza, rappresentazioni teatrali e spettacoli di ogni genere.</p>
+            <p>L'allestimento comprende <strong>linoleum specifico per la danza</strong>, moquette nera con telo perimetrale e quinte armate di diverse dimensioni, installate sull'apposita struttura di sostegno per creare un elegante fondale nero.</p>
+            <p>Le quinte laterali, disposte in maniera sfalsata, permettono di realizzare pratiche uscite di scena, mentre la platea di sedie completa l'allestimento, offrendo una sistemazione ordinata e accogliente per il pubblico.</p>
+            <p><strong>Un'unica soluzione completa, pensata per trasformare qualsiasi spazio in un vero e proprio palcoscenico.</strong></p>
+            </details>
+            <a class="line-link" href="#catalogo" data-jump="scenografia">Vedi la scenografia</a>
+          </div>
+        </article>
+        <article class="feat rev">
+          <figure class="feat-img"><img src="img/bancarelle-via.webp" alt="Bancarelle con tetto in telo chiaro allineate lungo una via del centro storico" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Mercatini e manifestazioni</h3>
+            <p class="feat-lead">Bancarelle in ferro con pianale 200 × 80 cm, luci collegabili in serie e teli ignifughi con collaudo.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Soluzioni pratiche ed eleganti per l'organizzazione di mercatini, fiere, esposizioni ed eventi all'aperto.</p>
+            <p>Le nostre strutture sono realizzate con robusta carpenteria in ferro e dotate di pianale in legno dalle dimensioni di 200 × 80 cm. Ogni postazione può essere completata con un sistema di illuminazione integrabile e collegabile in serie, per garantire funzionalità e uniformità nell'allestimento.</p>
+            <p>Le strutture vengono fornite complete di documentazione di collaudo, con descrizione delle caratteristiche costruttive e attestazione di ignifugazione dei teli.</p>
+            <p>Sono disponibili in due eleganti configurazioni:</p>
+            <ul class="split-list"><li>Versione color pietra leccese, per un'estetica sobria e armoniosa.</li><li>Versione con copertura in cannucciato e telo verde, ideale per un'atmosfera più naturale e tradizionale.</li></ul>
+            <p>Allestimenti coordinati, funzionali e pronti per valorizzare ogni manifestazione.</p>
+            </details>
+            <a class="line-link" href="#catalogo" data-jump="mercatini">Vedi le bancarelle</a>
+          </div>
+        </article>
+        <article class="feat">
+          <figure class="feat-img"><img src="img/chiavarine-corridoio.webp" alt="Sedie Chiavarina trasparenti disposte in due settori con corridoio centrale, nel cortile di una masseria" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Cerimonie</h3>
+            <p class="feat-lead">Sedie Chiavarina Napoleone trasparenti per matrimoni e celebrazioni. Le portiamo, le disponiamo e le ritiriamo.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Eleganza, ordine e cura dei dettagli per accompagnare i momenti più importanti.</p>
+            <p>Mettiamo a disposizione sedie modello Chiavarina Napoleone trasparenti, ideali per cerimonie nuziali, celebrazioni ed eventi esclusivi.</p>
+            <p>Il servizio comprende il trasporto, la disposizione e l'allestimento completo delle sedie, oltre al ritiro al termine dell'evento.</p>
+            <p>Ci occupiamo di ogni dettaglio, per offrirti una platea elegante e pronta ad accogliere i tuoi ospiti nel giorno più importante.</p>
+            </details>
+            <a class="line-link" href="#catalogo" data-jump="sedute">Vedi le sedie</a>
+          </div>
+        </article>
+        <article class="feat rev">
+          <figure class="feat-img"><img src="img/seggi-elettorali.webp" alt="Cabine elettorali montate in un'aula per l'allestimento di un seggio" width="1100" height="1100" loading="lazy"></figure>
+          <div class="feat-text">
+            <h3>Seggi elettorali</h3>
+            <p class="feat-lead">Trasporto, allestimento e ritiro dei seggi elettorali.</p>
+            <details class="feat-more"><summary>Leggi di più</summary>
+            <p>Ci occupiamo dell'allestimento completo dei seggi elettorali, dall'inizio alla fine.</p>
+            <p>Con i nostri mezzi ritiriamo le cabine e tutto il materiale necessario, li trasportiamo presso le sedi di voto e allestiamo i seggi.</p>
+            <p>A elezioni concluse smontiamo tutto e riportiamo cabine e materiale presso le sedi di deposito.</p>
+            </details>
+            <a class="line-link" href="#preventivo">Chiedi un preventivo</a>
+          </div>
+        </article>
       </div>
-      <div class="split rev">
-        <figure class="split-img wipe"><img src="img/palco-schermo.webp" alt="Palco in piazza con struttura di fondo, quinte nere e ledwall" width="1100" height="1100" loading="lazy"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Struttura di fondo</p>
-          <h3>Struttura per fondale</h3>
-          <p>Per rendere il palco ancora più versatile e funzionale, è possibile integrare un'apposita struttura di sostegno, progettata per supportare diverse soluzioni di allestimento scenografico.</p>
-          <p>Ideale per l'installazione di quinte armate per la realizzazione di fondali neri, la struttura consente inoltre il montaggio di LEDwall, striscioni pubblicitari, banner e altri elementi scenografici.</p>
-          <p>Una soluzione pratica e modulare, pensata per personalizzare il palco e valorizzare ogni tipo di evento, dagli spettacoli alle manifestazioni, fino a concerti e convention.</p>
-          <a class="line-link" href="#preventivo">Chiedi un preventivo</a>
-        </div>
-      </div>
-      <div class="split">
-        <figure class="split-img wipe"><img src="img/saggio-alto.webp" alt="Allestimento completo per un saggio visto dall'alto: palco con linoleum, fondale di quinte nere e platea di sedie" width="1100" height="1100" loading="lazy"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Scenografia</p>
-          <h3>Allestimento completo per saggi e spettacoli</h3>
-          <p>Tutto il necessario per realizzare una scena professionale, funzionale e curata in ogni dettaglio, ideale per saggi di danza, rappresentazioni teatrali e spettacoli di ogni genere.</p>
-          <p>L'allestimento comprende <strong>linoleum specifico per la danza</strong>, moquette nera con telo perimetrale e quinte armate di diverse dimensioni, installate sull'apposita struttura di sostegno per creare un elegante fondale nero.</p>
-          <p>Le quinte laterali, disposte in maniera sfalsata, permettono di realizzare pratiche uscite di scena, mentre la platea di sedie completa l'allestimento, offrendo una sistemazione ordinata e accogliente per il pubblico.</p>
-          <p><strong>Un'unica soluzione completa, pensata per trasformare qualsiasi spazio in un vero e proprio palcoscenico.</strong></p>
-          <a class="line-link" href="#catalogo" data-jump="scenografia">Vedi la scenografia</a>
-        </div>
-      </div>
-      <div class="split rev">
-        <figure class="split-img wipe"><img src="img/bancarelle-via.webp" alt="Bancarelle con tetto in telo chiaro allineate lungo una via del centro storico" width="1100" height="1100" loading="lazy"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Bancarelle</p>
-          <h3>Allestimenti per mercatini e manifestazioni</h3>
-          <p>Soluzioni pratiche ed eleganti per l'organizzazione di mercatini, fiere, esposizioni ed eventi all'aperto.</p>
-          <p>Le nostre strutture sono realizzate con robusta carpenteria in ferro e dotate di pianale in legno dalle dimensioni di 200 × 80 cm. Ogni postazione può essere completata con un sistema di illuminazione integrabile e collegabile in serie, per garantire funzionalità e uniformità nell'allestimento.</p>
-          <p>Le strutture vengono fornite complete di documentazione di collaudo, con descrizione delle caratteristiche costruttive e attestazione di ignifugazione dei teli.</p>
-          <p>Sono disponibili in due eleganti configurazioni:</p>
-          <ul class="split-list"><li>Versione color pietra leccese, per un'estetica sobria e armoniosa.</li><li>Versione con copertura in cannucciato e telo verde, ideale per un'atmosfera più naturale e tradizionale.</li></ul>
-          <p>Allestimenti coordinati, funzionali e pronti per valorizzare ogni manifestazione.</p>
-          <a class="line-link" href="#catalogo" data-jump="mercatini">Vedi le bancarelle</a>
-        </div>
-      </div>
-      <div class="split">
-        <figure class="split-img wipe"><img src="img/chiavarine-corridoio.webp" alt="Sedie Chiavarina trasparenti disposte in due settori con corridoio centrale, nel cortile di una masseria" width="1100" height="1100" loading="lazy"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Cerimonie</p>
-          <h3>Allestimento platea per cerimonie ed eventi speciali</h3>
-          <p>Eleganza, ordine e cura dei dettagli per accompagnare i momenti più importanti.</p>
-          <p>Mettiamo a disposizione sedie modello Chiavarina Napoleone trasparenti, ideali per cerimonie nuziali, celebrazioni ed eventi esclusivi.</p>
-          <p>Il servizio comprende il trasporto, la disposizione e l'allestimento completo delle sedie, oltre al ritiro al termine dell'evento.</p>
-          <p>Ci occupiamo di ogni dettaglio, per offrirti una platea elegante e pronta ad accogliere i tuoi ospiti nel giorno più importante.</p>
-          <a class="line-link" href="#catalogo" data-jump="sedute">Vedi le sedie</a>
-        </div>
-      </div>
-      <div class="split rev" id="seggi">
-        <figure class="split-img wipe"><img src="img/seggi-elettorali.webp" alt="Cabine elettorali montate in un'aula per l'allestimento di un seggio" width="1100" height="1100" loading="lazy"></figure>
-        <div class="split-text">
-          <p class="eyebrow">Seggi elettorali</p>
-          <h3>Allestimento dei seggi elettorali</h3>
-          <p>Ci occupiamo dell'allestimento completo dei seggi elettorali, dall'inizio alla fine.</p>
-          <p>Con i nostri mezzi ritiriamo le cabine e tutto il materiale necessario, li trasportiamo presso le sedi di voto e allestiamo i seggi.</p>
-          <p>A elezioni concluse smontiamo tutto e riportiamo cabine e materiale presso le sedi di deposito.</p>
-          <a class="line-link" href="#preventivo">Chiedi un preventivo</a>
-        </div>
-      </div>
+      <ul class="occasions" aria-label="Eventi che allestiamo">
+        <li>Sagre di paese</li><li>Mercatini di Natale</li><li>Matrimoni</li><li>Concerti in piazza</li><li>Saggi di danza</li><li>Fiere</li><li>Eventi aziendali</li><li>Manifestazioni sportive</li>
+      </ul>
     </div>
     <div class="carousel" role="region" aria-roledescription="carosello" aria-label="Foto dei nostri lavori">
       <div class="car-stage" id="car-track" tabindex="0">
@@ -414,57 +541,9 @@ textarea { min-height: 96px; resize: vertical; }
     </div>
   </section>
 
-  <section class="section" id="catalogo" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Catalogo</p>
-        <h2>Scegli cosa ti serve</h2>
-        <p>Seleziona gli articoli di tuo interesse e richiedi un <strong>preventivo personalizzato</strong>, elaborato in base alle quantità necessarie, alle date e alla location dell'evento.</p>
-        <p>Contattaci per verificare disponibilità e soluzioni più adatte alle tue esigenze.</p>
-      </div>
-      <div class="filters" id="filters" role="group" aria-label="Filtra per categoria"></div>
-      <div class="grid" id="grid"></div>
-    </div>
-  </section>
-
-  <section class="section band" id="come-funziona">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Come funziona</p>
-        <h2>Pensiamo a tutto noi</h2>
-        <p>Dalla prima richiesta al ritiro finale, gestiamo ogni fase del tuo allestimento. Un unico referente, un servizio completo.</p>
-      </div>
-      <ol class="steps">
-        <li><h3>Raccontaci il tuo evento</h3><p>Seleziona gli articoli, indica quantità, data e luogo. Ti aiutiamo a individuare la soluzione più adatta alle tue esigenze.</p></li>
-        <li><h3>Ricevi il tuo preventivo</h3><p>Prepariamo un'offerta personalizzata, chiara e dettagliata, comprensiva dei servizi richiesti.</p></li>
-        <li><h3>Consegniamo e allestiamo</h3><p>Portiamo le attrezzature sul posto e ci occupiamo del montaggio, lasciando tutto pronto per il tuo evento.</p></li>
-        <li><h3>Smontiamo e ritiriamo</h3><p>A evento concluso, pensiamo allo smontaggio e al ritiro delle attrezzature. Tu non devi preoccuparti di nulla.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="servizi">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Servizi</p>
-        <h2>Non solo materiale</h2>
-      </div>
-      <ul class="services">
-        <li><h3>Sopralluogo</h3><p>Veniamo a vedere piazza, cortile o sala per capire ingombri, accessi e fondo su cui montare.</p></li>
-        <li><h3>Trasporto e montaggio</h3><p>Il nostro personale consegna e monta con i propri mezzi, negli orari concordati.</p></li>
-        <li><h3>Consulenza sulle quantità</h3><p>Quante sedie per 200 invitati? Che palco per una band di cinque elementi? Te lo diciamo noi.</p></li>
-        <li><h3>Seggi elettorali</h3><p>Ritiro, trasporto e montaggio delle cabine e del materiale per i seggi, con smontaggio e riconsegna a elezioni concluse.</p></li>
-      </ul>
-      <ul class="occasions" aria-label="Eventi che allestiamo">
-        <li>Sagre di paese</li><li>Mercatini di Natale</li><li>Matrimoni</li><li>Concerti in piazza</li><li>Feste private</li><li>Fiere</li><li>Eventi aziendali</li><li>Manifestazioni sportive</li>
-      </ul>
-    </div>
-  </section>
-
   <section class="section quote" id="preventivo">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Preventivo</p>
         <h2>Richiedi un preventivo</h2>
         <p>Gratuito e senza impegno. Più dettagli ci dai, più preciso sarà il prezzo.</p>
       </div>
@@ -487,7 +566,7 @@ textarea { min-height: 96px; resize: vertical; }
             <div class="field"><label for="f-data">Data dell'evento</label><input id="f-data" name="data" type="date"></div>
             <div class="field full"><label for="f-luogo">Luogo (comune e indirizzo)</label><input id="f-luogo" name="luogo"></div>
             <div class="field full"><label for="f-note">Note</label><textarea id="f-note" name="note" placeholder="Es. piazza con fondo in ghiaia, montaggio il giorno prima, 150 invitati…"></textarea></div>
-            <div class="field full"><button class="btn btn-primary" type="submit">Continua →</button>
+            <div class="field full"><button class="btn btn-primary" type="submit">Continua</button>
               <p class="form-note">Proseguendo dichiari di aver letto l'<a href="privacy.html">informativa privacy</a>.</p>
               <p class="form-note" id="form-msg" role="status"></p></div>
           </form>
@@ -506,7 +585,6 @@ textarea { min-height: 96px; resize: vertical; }
   <section class="section" id="domande">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Domande frequenti</p>
         <h2>Tutto quello che devi sapere</h2>
       </div>
       <div class="faq">
@@ -523,7 +601,7 @@ textarea { min-height: 96px; resize: vertical; }
 
 <a class="wa-float" href="https://wa.me/393283159264" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2a8.200 8.200 0 01-4.200-1.150l-.3-.18-3 .8.8-2.900-.2-.3A8.200 8.200 0 1112 20.200zm4.500-6.100c-.25-.12-1.450-.72-1.680-.8-.22-.08-.39-.12-.55.12-.160.250-.630.800-.780.970-.140.160-.290.180-.530.060-.250-.120-1.040-.380-1.980-1.220-.730-.650-1.230-1.460-1.370-1.700-.140-.250-.020-.380.110-.500.110-.110.250-.290.370-.430.120-.140.160-.250.250-.410.080-.160.040-.310-.020-.430-.060-.120-.550-1.330-.760-1.820-.200-.480-.400-.410-.550-.420h-.470c-.160 0-.430.060-.650.310-.220.250-.860.840-.860 2.050 0 1.210.880 2.380 1 2.540.120.160 1.730 2.640 4.190 3.700.590.250 1.040.400 1.400.520.590.190 1.120.160 1.540.100.470-.070 1.450-.590 1.650-1.160.200-.570.200-1.060.140-1.160-.060-.100-.220-.160-.470-.280z"/></svg><span>WhatsApp</span></a>
 
-<footer class="footer">
+<footer class="footer" id="contatti">
   <div class="wrap">
     <div class="footer-grid">
       <div><img class="footer-logo" src="img/logo-chiaro.webp" alt="MediaEventi Event Solution" width="900" height="140"><p>Noleggio di palchi, pedane, scenografie, gazebi, sedie, tavolini e bancarelle per eventi pubblici e privati.</p></div>
@@ -628,12 +706,23 @@ textarea { min-height: 96px; resize: vertical; }
       var body = el("div", { class: "card-body" });
       body.appendChild(el("span", { class: "card-cat" }, catName[it.cat]));
       body.appendChild(el("h3", null, it.name));
-      body.appendChild(el("p", null, it.desc));
+      var desc = el("p", { class: "card-desc" }, it.desc);
+      body.appendChild(desc);
       var specs = el("ul", { class: "specs" });
       it.specs.forEach(function (s) { specs.appendChild(el("li", null, s)); });
       body.appendChild(specs);
+      var sp = el("ul", { class: "card-spec" });
+      it.specs.forEach(function (x) { sp.appendChild(el("li", null, x)); });
+      body.insertBefore(sp, desc);
+      var more = el("button", { type: "button", class: "card-more", "aria-expanded": "false" }, "Leggi di più");
+      more.addEventListener("click", function () {
+        var open = card.classList.toggle("is-open");
+        more.setAttribute("aria-expanded", String(open));
+        more.textContent = open ? "Mostra meno" : "Leggi di più";
+      });
+      body.insertBefore(more, desc.nextSibling);
       var inList = !!list[it.id];
-      var btn = el("button", { type: "button", class: "btn btn-ghost btn-small", "aria-pressed": String(inList) }, inList ? "Nella lista ✓" : "+ Aggiungi al preventivo");
+      var btn = el("button", { type: "button", class: "btn btn-ghost btn-small", "aria-pressed": String(inList) }, inList ? "Nella lista ✓" : "Aggiungi al preventivo");
       btn.addEventListener("click", function () {
         if (list[it.id]) delete list[it.id]; else list[it.id] = it.mq ? "?" : 1;
         update();
@@ -642,14 +731,14 @@ textarea { min-height: 96px; resize: vertical; }
       card.appendChild(art); card.appendChild(body);
       grid.appendChild(card);
     });
-    if (animate) reveal(grid.children, 80, 3);
+    
   }
 
   function renderLines() {
     lines.textContent = "";
     var ids = Object.keys(list);
     $("empty").hidden = ids.length > 0;
-    $("header-count").textContent = ids.length;
+    $("header-count").textContent = ids.length; $("header-count").setAttribute("data-n", ids.length);
     ids.forEach(function (id) {
       var row = el("div", { class: "line" });
       row.appendChild(el("span", { class: "line-name" }, byId[id].name));
@@ -753,17 +842,22 @@ textarea { min-height: 96px; resize: vertical; }
   })();
 
   renderFilters(); renderGrid(true); renderLines();
-  reveal(document.querySelectorAll(".hero .eyebrow, .hero h1, .hero-lead, .hero-cta"), 130);
-  reveal(document.querySelectorAll(".hero-list a"), 90);
-  reveal(document.querySelectorAll(".truss"));
-  document.querySelectorAll(".section-head").forEach(function (h) { reveal(h.children, 120); });
-  [".steps li", ".services li", ".occasions li", ".panel", ".faq details", ".footer-grid > *"].forEach(function (sel) {
-    reveal(document.querySelectorAll(sel), sel === ".occasions li" ? 60 : 110);
-  });
-  reveal(document.querySelectorAll(".filters"));
-  reveal(document.querySelectorAll(".split .split-img, .hero-img"));
+  reveal(document.querySelectorAll(".hero h1, .hero-lead, .hero-cta"), 130);
+  reveal(document.querySelectorAll(".hero-img"));
   reveal(document.querySelectorAll(".carousel"));
-  document.querySelectorAll(".split-text").forEach(function (t) { reveal(t.children, 130); });
+
+  (function menu() {
+    var b = $("menu-btn"), m = $("menu-mobile");
+    function set(open) { b.setAttribute("aria-expanded", String(open)); b.setAttribute("aria-label", open ? "Chiudi il menu" : "Apri il menu"); m.hidden = !open; }
+    b.addEventListener("click", function () { set(m.hidden); });
+    m.addEventListener("click", function (e) { if (e.target.tagName === "A") set(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+  })();
+  (function waFloat() {
+    var wa = document.querySelector(".wa-float"), hero = document.querySelector(".hero-img");
+    if (!wa || !hero || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (es) { wa.classList.toggle("is-hidden", es[0].isIntersecting); }).observe(hero);
+  })();
 })();
 </script>
 </body>
