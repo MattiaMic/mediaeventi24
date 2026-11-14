@@ -155,22 +155,24 @@ a { color: inherit; }
 .split-list li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 10px; height: 3px; background: var(--accent); }
 .split-text p strong { color: var(--ink); font-weight: 600; }
 .split { align-items: start; }
-/* Carosello dei lavori */
-.carousel { margin-top: 88px; }
-.car-track { position: relative; display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none; }
-.car-track::-webkit-scrollbar { display: none; }
-.car-slide { flex: 0 0 calc((100% - 48px) / 3); scroll-snap-align: start; margin: 0; aspect-ratio: 1 / 1; max-width: 100%; overflow: hidden; background: var(--tile); }
-.car-slide img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s cubic-bezier(.16,.7,.2,1); }
-.car-slide:hover img { transform: scale(1.04); }
-.car-nav { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+/* Carosello dei lavori: a tutta larghezza, foto centrale in primo piano */
+.carousel { margin-top: 96px; }
+.car-stage { --w: 33.34%; --side: .84; --mid: 1.1; position: relative; aspect-ratio: 100 / 38; max-width: 100%; overflow: hidden; touch-action: pan-y; outline: none; }
+.car-slide { position: absolute; left: 50%; top: 50%; width: var(--w); aspect-ratio: 1 / 1; max-width: 100%; margin: 0; overflow: hidden; background: var(--tile); cursor: pointer;
+  transform: translate(calc(-50% + var(--d, 0) * 100%), -50%) scale(var(--side)); filter: brightness(.82);
+  transition: transform 1.1s cubic-bezier(.65,0,.35,1), filter 1.1s ease; }
+.car-slide.is-center { transform: translate(-50%, -50%) scale(var(--mid)); filter: none; z-index: 2; cursor: default; }
+.car-slide img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.car-stage:focus-visible .car-slide.is-center { outline: 3px solid var(--sun); outline-offset: -3px; }
+.car-nav { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
 .car-dots { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
 .car-dot { width: 30px; height: 20px; padding: 0; border: 0; background: none; cursor: pointer; position: relative; }
 .car-dot::before { content: ""; position: absolute; left: 0; right: 0; top: 8px; height: 4px; background: var(--line); transition: background .3s; }
 .car-dot[aria-current="true"]::before { background: var(--accent); }
 .car-btn { flex: none; width: 46px; height: 46px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font: 600 1.1rem var(--body); cursor: pointer; transition: background .15s, color .15s; }
 .car-btn:hover { background: var(--ink); color: var(--bg); }
-@media (max-width: 760px) { .carousel { margin-top: 56px; } .car-track { gap: 12px; } .car-slide { flex-basis: 84%; } }
-@media (prefers-reduced-motion: reduce) { .car-track { scroll-behavior: auto; } }
+@media (max-width: 760px) { .carousel { margin-top: 64px; } .car-stage { --w: 72%; --side: .86; --mid: 1; aspect-ratio: 100 / 76; } .car-dot { width: 16px; } .car-dots { gap: 5px; } }
+@media (prefers-reduced-motion: reduce) { .car-slide { transition: none; } }
 .line-link { display: inline-flex; align-items: center; gap: 14px; font-weight: 600; text-decoration: none; }
 .line-link::before { content: ""; width: 48px; height: 1px; background: currentColor; transition: width .5s cubic-bezier(.16,.7,.2,1); }
 .line-link:hover::before { width: 80px; }
@@ -377,25 +379,25 @@ textarea { min-height: 96px; resize: vertical; }
           <a class="line-link" href="#preventivo">Chiedi un preventivo</a>
         </div>
       </div>
-      <div class="carousel" role="region" aria-roledescription="carosello" aria-label="Foto dei nostri lavori">
-        <div class="car-track" id="car-track" tabindex="0">
-          <figure class="car-slide"><img src="img/pedana-mura.webp" alt="Pedana tutta nera con moquette e telo, montata sotto le mura" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/car-gradinata-scala.webp" alt="Gradinata su più livelli con sedie azzurre e scala di accesso, montata in una piazza" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/palco-livelli.webp" alt="Palco modulare su più livelli a gradinata, con la struttura di fondo montata sul retro" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/car-palco-chiesa.webp" alt="Palco con telo nero montato davanti alla facciata di una chiesa barocca" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/platea-sedie-nere.webp" alt="Platea di sedie nere davanti a un palco, sotto le mura" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/car-gradinata-fronte.webp" alt="Gradinata con sedie azzurre vista di fronte, in una piazza del centro storico" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/bancarelle-prato.webp" alt="Bancarelle con copertura in cannucciato e telo verde montate su un prato accanto a un edificio in pietra" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/car-bancarelle-leccese.webp" alt="Bancarelle color pietra leccese allineate in una piazza del centro storico, tra le luminarie" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/bancarella-ricevimento.webp" alt="Bancarella allestita come punto buffet per un ricevimento" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/car-bancarelle-canne.webp" alt="Bancarelle con copertura in cannucciato e telo verde accanto a un muro a secco" width="1000" height="1000" loading="lazy"></figure>
-          <figure class="car-slide"><img src="img/bancarelle-mercatino.webp" alt="Bancarelle allestite dagli espositori durante un mercatino serale" width="1000" height="1000" loading="lazy"></figure>
-        </div>
-        <div class="car-nav">
-          <div class="car-dots" id="car-dots"></div>
-          <button class="car-btn" type="button" id="car-prev" aria-label="Foto precedente">←</button>
-          <button class="car-btn" type="button" id="car-next" aria-label="Foto successiva">→</button>
-        </div>
+    </div>
+    <div class="carousel" role="region" aria-roledescription="carosello" aria-label="Foto dei nostri lavori">
+      <div class="car-stage" id="car-track" tabindex="0">
+        <figure class="car-slide"><img src="img/pedana-mura.webp" alt="Pedana tutta nera con moquette e telo, montata sotto le mura" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/car-gradinata-scala.webp" alt="Gradinata su più livelli con sedie azzurre e scala di accesso, montata in una piazza" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/palco-livelli.webp" alt="Palco modulare su più livelli a gradinata, con la struttura di fondo montata sul retro" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/car-palco-chiesa.webp" alt="Palco con telo nero montato davanti alla facciata di una chiesa barocca" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/platea-sedie-nere.webp" alt="Platea di sedie nere davanti a un palco, sotto le mura" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/car-gradinata-fronte.webp" alt="Gradinata con sedie azzurre vista di fronte, in una piazza del centro storico" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/bancarelle-prato.webp" alt="Bancarelle con copertura in cannucciato e telo verde montate su un prato accanto a un edificio in pietra" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/car-bancarelle-leccese.webp" alt="Bancarelle color pietra leccese allineate in una piazza del centro storico, tra le luminarie" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/bancarella-ricevimento.webp" alt="Bancarella allestita come punto buffet per un ricevimento" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/car-bancarelle-canne.webp" alt="Bancarelle con copertura in cannucciato e telo verde accanto a un muro a secco" width="1000" height="1000" loading="lazy"></figure>
+        <figure class="car-slide"><img src="img/bancarelle-mercatino.webp" alt="Bancarelle allestite dagli espositori durante un mercatino serale" width="1000" height="1000" loading="lazy"></figure>
+      </div>
+      <div class="wrap car-nav">
+        <div class="car-dots" id="car-dots"></div>
+        <button class="car-btn" type="button" id="car-prev" aria-label="Foto precedente">←</button>
+        <button class="car-btn" type="button" id="car-next" aria-label="Foto successiva">→</button>
       </div>
     </div>
   </section>
@@ -700,40 +702,44 @@ textarea { min-height: 96px; resize: vertical; }
   });
 
   (function carosello() {
-    var track = $("car-track"); if (!track) return;
-    var slides = track.querySelectorAll(".car-slide"), dotsBox = $("car-dots");
+    var stage = $("car-track"); if (!stage) return;
+    var slides = [].slice.call(stage.querySelectorAll(".car-slide")), n = slides.length, cur = 0, dotsBox = $("car-dots");
     var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
     var timer = null, paused = false, visible = true;
-    function step() { return slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth; }
-    function perView() { return Math.max(1, Math.round(track.clientWidth / step())); }
-    function last() { return Math.max(0, slides.length - perView()); }
-    function current() { return Math.min(last(), Math.round(track.scrollLeft / step())); }
-    function goTo(i) {
-      var n = last(); if (i > n) i = 0; if (i < 0) i = n;
-      track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: still ? "auto" : "smooth" });
+    slides.forEach(function (sl, k) {
+      sl.addEventListener("click", function () { if (k !== cur) { goTo(k); hold(); } });
+      var d = el("button", { type: "button", class: "car-dot", "aria-label": "Foto " + (k + 1) });
+      d.addEventListener("click", function () { goTo(k); hold(); });
+      dotsBox.appendChild(d);
+    });
+    function layout(anim) {
+      slides.forEach(function (sl, k) {
+        var d = k - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+        var prev = parseFloat(sl.getAttribute("data-d"));
+        var jump = isNaN(prev) || Math.abs(d - prev) > 1.5;
+        sl.style.transition = (!anim || jump) ? "none" : "";
+        sl.style.setProperty("--d", d);
+        sl.setAttribute("data-d", d);
+        sl.classList.toggle("is-center", d === 0);
+        sl.setAttribute("aria-hidden", String(d !== 0));
+        if (jump && anim) { void sl.offsetWidth; }
+      });
+      [].forEach.call(dotsBox.children, function (dt, k) { dt.setAttribute("aria-current", String(k === cur)); });
     }
-    function drawDots() {
-      dotsBox.textContent = "";
-      for (var i = 0; i <= last(); i++) (function (k) {
-        var d = el("button", { type: "button", class: "car-dot", "aria-label": "Foto " + (k + 1) });
-        d.addEventListener("click", function () { goTo(k); hold(); });
-        dotsBox.appendChild(d);
-      })(i);
-      mark();
-    }
-    function mark() { var c = current(); [].forEach.call(dotsBox.children, function (d, k) { d.setAttribute("aria-current", String(k === c)); }); }
-    function play() { clearInterval(timer); if (still) return; timer = setInterval(function () { if (!paused && visible && !document.hidden) goTo(current() + 1); }, 4500); }
+    function goTo(k) { cur = ((k % n) + n) % n; layout(!still); }
+    function play() { clearInterval(timer); if (still) return; timer = setInterval(function () { if (!paused && visible && !document.hidden) goTo(cur + 1); }, 5000); }
     function hold() { paused = true; clearTimeout(hold.t); hold.t = setTimeout(function () { paused = false; }, 9000); }
-    $("car-prev").addEventListener("click", function () { goTo(current() - 1); hold(); });
-    $("car-next").addEventListener("click", function () { goTo(current() + 1); hold(); });
-    track.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") { e.preventDefault(); goTo(current() + 1); hold(); } if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current() - 1); hold(); } });
-    var t; track.addEventListener("scroll", function () { clearTimeout(t); t = setTimeout(mark, 80); }, { passive: true });
-    track.addEventListener("pointerenter", function () { paused = true; });
-    track.addEventListener("pointerleave", function () { paused = false; });
-    track.addEventListener("touchstart", hold, { passive: true });
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(track);
-    var rz; addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(drawDots, 150); });
-    drawDots(); play();
+    $("car-prev").addEventListener("click", function () { goTo(cur - 1); hold(); });
+    $("car-next").addEventListener("click", function () { goTo(cur + 1); hold(); });
+    stage.addEventListener("keydown", function (e) { if (e.key === "ArrowRight") { e.preventDefault(); goTo(cur + 1); hold(); } if (e.key === "ArrowLeft") { e.preventDefault(); goTo(cur - 1); hold(); } });
+    var x0 = null;
+    stage.addEventListener("pointerdown", function (e) { x0 = e.clientX; });
+    stage.addEventListener("pointerup", function (e) { if (x0 === null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) { goTo(cur + (dx < 0 ? 1 : -1)); hold(); } });
+    stage.addEventListener("pointercancel", function () { x0 = null; });
+    stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") paused = true; });
+    stage.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") paused = false; });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(stage);
+    layout(false); play();
   })();
 
   renderFilters(); renderGrid(true); renderLines();
