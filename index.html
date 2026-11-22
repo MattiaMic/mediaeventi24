@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-hZDRi/T3YJfucgmj4JPLjS862HqZaQfBeDD+Jk/ZM00='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xQBFV5q3gfdhq3OXQsKf7Y4iUNZRmBxIrL5bzoK4wwU='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="MediaEventi noleggia palchi e pedane modulari, scenografie, gazebi, sedie, tavolini e bancarelle per eventi a Lecce e in tutto il Salento, con consegna, montaggio e ritiro. Sede a Martano (LE).">
@@ -315,6 +315,10 @@ input, select, textarea { font: 400 1rem var(--body); color: var(--ink); backgro
 input:focus, select:focus, textarea:focus { border-color: var(--ink); outline: none; }
 textarea { min-height: 96px; resize: vertical; }
 .form-note { font-size: 0.85rem; color: var(--muted); }
+.quote-grid .panel { scroll-margin-top: 96px; }
+.field-err { font-size: 0.85rem; font-weight: 600; color: #b3261e; display: flex; gap: 6px; align-items: baseline; }
+.field-err::before { content: "!"; flex: none; width: 16px; height: 16px; border-radius: 50%; background: #b3261e; color: #fff; font-size: 0.7rem; line-height: 16px; text-align: center; }
+input[aria-invalid="true"] { border-color: #b3261e; background: #fdf3f2; }
 .result { border: 2px solid var(--accent); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
 .result pre { font: 400 0.85rem/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; background: var(--bg); padding: 12px; }
 
@@ -573,21 +577,22 @@ textarea { min-height: 96px; resize: vertical; }
       <div class="quote-grid">
         <div class="panel">
           <h3>La tua lista</h3>
-          <p class="empty" id="empty">La lista è vuota. Aggiungi gli articoli dal <a href="#catalogo">catalogo</a>, oppure descrivi cosa ti serve nelle note.</p>
+          <p class="empty" id="empty">La lista è vuota. Aggiungi gli articoli dal <a href="#catalogo">catalogo</a> con "Aggiungi al preventivo".</p>
+          <p class="field-err" id="err-lista" hidden></p>
           <div class="lines" id="lines"></div>
           <p class="form-note" style="margin-top:14px">Per palco, pedana, linoleum e moquette indica la superficie in metri quadri (per esempio 8×6 m = 48 m²). Per gli altri articoli, il numero di pezzi.</p>
         </div>
         <div class="panel">
           <form id="quote-form" novalidate>
             <div class="field"><label for="f-nome">Nome e cognome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
-            <div class="field"><label for="f-tel">Telefono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" required></div>
-            <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-tel">Telefono</label><input id="f-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="es. 328 123 4567" aria-describedby="err-tel" required><p class="field-err" id="err-tel" hidden></p></div>
+            <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="120" placeholder="es. nome@esempio.it" aria-describedby="err-email" required><p class="field-err" id="err-email" hidden></p></div>
             <div class="field"><label for="f-tipo">Tipo di evento</label>
               <select id="f-tipo" name="tipo">
                 <option>Sagra o festa di paese</option><option>Mercatino</option><option>Matrimonio o cerimonia</option><option>Concerto o spettacolo</option><option>Festa privata</option><option>Evento aziendale</option><option>Allestimento seggi elettorali</option><option>Altro</option>
               </select></div>
-            <div class="field"><label for="f-data">Data dell'evento</label><input id="f-data" name="data" type="date"></div>
-            <div class="field full"><label for="f-luogo">Luogo (comune e indirizzo)</label><input id="f-luogo" name="luogo"></div>
+            <div class="field"><label for="f-data">Data dell'evento</label><input id="f-data" name="data" type="date" aria-describedby="err-data" required><p class="field-err" id="err-data" hidden></p></div>
+            <div class="field full"><label for="f-luogo">Luogo (comune e indirizzo)</label><input id="f-luogo" name="luogo" autocomplete="off" maxlength="150" placeholder="es. Lecce, piazza Sant'Oronzo" aria-describedby="err-luogo" required><p class="field-err" id="err-luogo" hidden></p></div>
             <div class="field full"><label for="f-note">Note</label><textarea id="f-note" name="note" placeholder="Es. piazza con fondo in ghiaia, montaggio il giorno prima, 150 invitati…"></textarea></div>
             <div class="field full"><button class="btn btn-primary" type="submit">Continua</button>
               <p class="form-note">Proseguendo dichiari di aver letto l'<a href="privacy.html">informativa privacy</a>.</p>
@@ -819,18 +824,73 @@ textarea { min-height: 96px; resize: vertical; }
     });
   }
 
-  function update() { save(); renderGrid(); renderLines(); }
+  function update() { save(); renderGrid(); renderLines(); if (!$("err-lista").hidden) listaOk(); }
 
   document.querySelectorAll("[data-jump]").forEach(function (a) {
     a.addEventListener("click", function () { current = a.getAttribute("data-jump"); renderFilters(); renderGrid(true); });
   });
 
   var form = $("quote-form"), result = $("result"), msg = $("form-msg");
+  // Controlli su telefono ed email
+  function telErr(raw) {
+    var t = raw.trim();
+    if (!t) return "Inserisci un numero di telefono.";
+    if (/[^0-9+\s.\-\/()]/.test(t)) return "Usa solo cifre, ad esempio 328 123 4567.";
+    var d = t.replace(/[\s.\-\/()]/g, "");
+    if (d.indexOf("+") > 0 || (d.match(/\+/g) || []).length > 1) return "Il segno + va solo all'inizio, ad esempio +39 328 123 4567.";
+    if (/^(\+39|0039)/.test(d)) d = d.replace(/^(\+39|0039)/, "");
+    else if (/^(\+|00)/.test(d)) {
+      var n = d.replace(/^(\+|00)/, "");
+      return /^\d{8,15}$/.test(n) ? "" : "Il numero internazionale non sembra completo.";
+    }
+    if (!/^\d+$/.test(d)) return "Usa solo cifre, ad esempio 328 123 4567.";
+    if (/^3/.test(d)) return /^3\d{8,9}$/.test(d) ? "" : "Un cellulare ha 10 cifre, ad esempio 328 123 4567.";
+    if (/^0/.test(d)) return /^0\d{5,10}$/.test(d) ? "" : "Il numero fisso non sembra completo, ad esempio 0836 123456.";
+    return "Il numero deve iniziare con 3 (cellulare), 0 (fisso) o con il prefisso internazionale.";
+  }
+  function mailErr(raw) {
+    var t = raw.trim();
+    if (!t) return "Inserisci un indirizzo email.";
+    if (/\s/.test(t)) return "L'indirizzo email non può contenere spazi.";
+    var p = t.split("@");
+    if (p.length < 2) return "Manca la @, ad esempio nome@esempio.it.";
+    if (p.length > 2) return "L'indirizzo email può contenere una sola @.";
+    if (!p[0] || !p[1]) return "L'indirizzo email non è completo, ad esempio nome@esempio.it.";
+    if (/^\.|\.$|\.\./.test(p[0])) return "Controlla la parte prima della @.";
+    if (!/^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(p[1]) || /(^|\.)-|-(\.|$)/.test(p[1])) return "Controlla la parte dopo la @, ad esempio gmail.com o esempio.it.";
+    return "";
+  }
+  function dataErr(raw) { return raw ? "" : "Indica la data dell'evento."; }
+  function luogoErr(raw) { return raw.trim().length >= 2 ? "" : "Indica dove si svolge l'evento, almeno il comune."; }
+  function listaOk() {
+    var ok = Object.keys(list).length > 0, box = $("err-lista");
+    box.textContent = ok ? "" : "Aggiungi almeno un articolo dal catalogo."; box.hidden = ok;
+    return ok;
+  }
+  var CHECK = { telefono: [telErr, "f-tel", "err-tel"], email: [mailErr, "f-email", "err-email"], data: [dataErr, "f-data", "err-data"], luogo: [luogoErr, "f-luogo", "err-luogo"] };
+  function checkField(name) {
+    var c = CHECK[name], input = $(c[1]), box = $(c[2]), e = c[0](input.value);
+    box.textContent = e; box.hidden = !e;
+    if (e) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+    return !e;
+  }
+  Object.keys(CHECK).forEach(function (name) {
+    var input = $(CHECK[name][1]);
+    input.addEventListener("blur", function () { if (input.value.trim()) checkField(name); });
+    input.addEventListener("change", function () { if (input.getAttribute("aria-invalid")) checkField(name); });
+    input.addEventListener("input", function () { if (input.getAttribute("aria-invalid")) checkField(name); });
+  });
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var v = function (n) { return form.elements[n].value.trim(); };
-    if (!v("nome") || !v("telefono") || !/^\S+@\S+\.\S+$/.test(v("email"))) {
-      msg.textContent = "Inserisci nome, telefono e un indirizzo email valido per poterti rispondere.";
+    var okLista = listaOk();
+    var esiti = ["telefono", "email", "data", "luogo"].map(function (n) { return [n, checkField(n)]; });
+    var okNome = !!v("nome");
+    var sbagliati = esiti.filter(function (x) { return !x[1]; });
+    if (!okNome || sbagliati.length || !okLista) {
+      msg.textContent = (!okLista && okNome && !sbagliati.length) ? "Aggiungi almeno un articolo dal catalogo prima di continuare." : (!okNome && !sbagliati.length && okLista) ? "Inserisci il tuo nome per poterti rispondere." : "Controlla i campi evidenziati.";
+      if (!okLista) { $("lines").closest(".panel").scrollIntoView({ block: "start" }); }
+      else { var first = !okNome ? $("f-nome") : $(CHECK[sbagliati[0][0]][1]); first.focus(); }
       return;
     }
     msg.textContent = "";
