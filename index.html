@@ -354,6 +354,20 @@ input[aria-invalid="true"] { border-color: #b3261e; background: #fdf3f2; }
 .btn-wa { background: var(--wa); color: #fff; }
 .btn-wa:hover { filter: brightness(1.08); }
 .legal { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--band-line); font-size: 0.85rem; color: var(--band-muted); }
+
+/* Leggibilità e tocco su telefono */
+.card-more { min-height: 44px; margin-bottom: 4px; }
+.chip { min-height: 44px; }
+.hero-list a { min-height: 44px; }
+.feat-more summary { min-height: 44px; }
+@media (max-width: 800px) {
+  .card h3 { font-size: 1.06rem; }
+  .card p, .card-desc { font-size: 1rem; line-height: 1.5; }
+  .card-spec { font-size: 0.94rem; }
+  .card-more { font-size: 0.94rem; }
+  .card .btn, .btn-small { min-height: 44px; font-size: 0.92rem; }
+  .form-note { font-size: 0.94rem; }
+}
 </style>
 
 </head>
